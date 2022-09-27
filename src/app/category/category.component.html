@@ -1,1 +1,20 @@
-<p>category works!</p>
+<h2>This is category index page. You can see index of categories and edit it.</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+  </tbody>
+</table>

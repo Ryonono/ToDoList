@@ -24,6 +24,7 @@ export class ListService {
   }
 
 
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -31,4 +32,5 @@ export class ListService {
       return of(result as T);
     };
   }
+
 }
