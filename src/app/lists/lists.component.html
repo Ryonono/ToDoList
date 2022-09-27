@@ -1,0 +1,28 @@
+<h2>This is index page of to do list.</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>CategoryId</th>
+      <th>Explanation</th>
+      <th>ExpirationDay</th>
+      <th>Priority</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let list of lists">
+      <td>{{ list.name }}</td>
+      <td>{{ list.category_id }}</td>
+      <td>{{ list.explanation }}</td>
+      <td>{{ list.expiration_day | date: 'short' }}</td>
+      <td>{{ list.priority }}</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- MM/dd/y, hh:mm -->
