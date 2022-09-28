@@ -25,4 +25,87 @@
   </tbody>
 </table>
 
+<form [formGroup]="listForm">
+  
+  <div>
+    <label for="name">Name: </label>
+    <input id="name" type="text" formControlName="name" #listName>
+
+    <div class="mt-2" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      <div *ngIf="name.errors?.['required']">
+        Name is required and only space is not allowed.
+      </div>
+      <div *ngIf="name.errors?.['minlength']">
+        Name must be at least two characters long.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="category_id">Category Id: </label>
+    <select id="category_id" type="number" formControlName="category_id" #listCategory>
+      <option>Please choose one of all the categories.</option>
+      <!-- オブジェクトを指定している場合、ngValueを使わないと値が正常に切り替わらない -->
+      <!-- ここでstring型を受け取っており、Argument of type 'string' is not assignable to parameter of type 'number'.というエラーが出てしまう -->
+      <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+    </select>
+
+    <div class="mt-2" *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)"
+      class="alert alert-danger">
+      <div *ngIf="category_id.errors?.['required']">
+        category id is required and only space is not allowed.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="explanation">Explanation: </label>
+    <input id="explanation" type="text" formControlName="explanation" #listExplanation>
+
+    <div class="mt-2" *ngIf="explanation.invalid && (explanation.dirty || explanation.touched)"
+      class="alert alert-danger">
+      <div *ngIf="explanation.errors?.['required']">
+        explanation is required and only space is not allowed.
+      </div>
+      <div *ngIf="explanation.errors?.['minlength']">
+        explanation must be at least two characters long.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="expiration_day">Expiration Day: </label>
+    <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00" formControlName="expiration_day"
+      #listExpiration>
+
+    <div class="mt-2" *ngIf="expiration_day.invalid && (expiration_day.dirty || expiration_day.touched)"
+      class="alert alert-danger">
+      <div *ngIf="expiration_day.errors?.['required']">
+        expiration day is required and only space is not allowed.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="priority">Priority: </label>
+    <select id="priority" formControlName="priority" #listPriority>
+      <option>Please choose priority level.</option>
+      <option *ngFor="let priority of priorities" [ngValue]="priority">{{ priority }}</option>
+    </select>
+
+    <div class="mt-2" *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="alert alert-danger">
+      <div *ngIf="priority.errors?.['required']">
+        priority is required and only space is not allowed.
+      </div>
+    </div>
+  </div>
+
+
+  <button type="button" [disabled]="listForm.invalid"
+    (click)="addList(listName.value, listCategory.value, listExplanation.value, listExpiration.value, listPriority.value)">Create
+    new List</button>
+
+
+</form>
+
 <p><a routerLink="/categories">Go to Categories page</a></p>

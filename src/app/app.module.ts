@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ListsComponent } from './lists/lists.component';
 import { CategoryComponent } from './category/category.component';
 import { ListEditComponent } from './list-edit/list-edit.component';
+import { ReactiveFormsModule } from '@angular/forms'
 
 // ページを開いた際にERROR Error: Uncaught (in promise): NullInjectorError: R3InjectorError(AppModule)[ListService -> HttpClient -> HttpClient -> HttpClient]: 
 // NullInjectorError: No provider for HttpClient!
@@ -26,6 +27,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     )

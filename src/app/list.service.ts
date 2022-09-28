@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -35,7 +35,21 @@ export class ListService {
       )
   }
 
+  addList(list: List): Observable<List> {
+    // postメソッドの第一引数はURL,第二引数が加えるデータ、第三引数（オプション）にはヘッダ情報を渡す
+    return this.http.post<List>(this.listsUrl, list, this.httpOptions)
+    .pipe(
+      tap((list:List) => console.log("added new list")),
+      catchError(this.handleError<List>("added List"))
+    )
+  }
 
+
+
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   // TypeScriptの参考書で見たように、handleErrorは第一引数にoperation、第二引数に型引数リストを持つオプショナルなresultを取るので、なくても良い
   private handleError<T>(operation = 'operation', result?: T) {
