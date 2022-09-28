@@ -1,1 +1,43 @@
-<p>list-edit works!</p>
+<h2>This is List Edit page.</h2>
+
+<!-- この条件文がないと、どのlistかを見つけることができず、{{ list.name }}がエラーになる　Object is possibly 'undefined'. -->
+<div *ngIf="list">
+
+  <div>
+    <p>Id: </p>
+    <span>{{ list.id }}</span>
+  </div>
+
+  <div>
+    <p>Name: </p>
+    <!-- <input id="name" type="text" [(ngModel)]="list.name" > -->
+    {{ list.name }}
+  </div>
+
+  <div>
+    <p>Category Id: </p>
+    <input>
+    <!-- 選択式にしたい -->
+  </div>
+
+  <!-- <div>
+  <p>Explanation</p>
+  <input　id="explanation" type="text">
+</div> -->
+
+  <div>
+    <p>Expiration Day: </p>
+    <input>
+    <!-- 日付選択式にしたい -->
+  </div>
+
+  <div>
+    <p>Priority: </p>
+    <input>
+    <!-- 選択式にしたい -->
+  </div>
+
+</div>
+
+
+<div><a routerLink="/lists">Go Back To Lists</a></div>

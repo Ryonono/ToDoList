@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { List } from '../list';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-list-edit',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListEditComponent implements OnInit {
 
-  constructor() { }
+  @Input() list?: List;
+
+  constructor(private listService: ListService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getList();
+  }
+
+  getList(): void {
+    let num = Number(this.route.snapshot.paramMap.get('id'));
+    this.listService.getList(num).subscribe(list => this.list = list);
   }
 
 }
