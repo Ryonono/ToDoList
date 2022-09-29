@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Category } from '../category';
 import { CategoryService } from '../category.service'
 
@@ -12,6 +13,8 @@ export class CategoryComponent implements OnInit {
 
   categories: Category[] = [];
 
+  category?: Category;
+
   static notOnlyWhiteSpace(control: FormControl): ValidationErrors | null {
     if ((control.value != null) && (control.value.trim().length === 0)) {
       console.log('notOnlyWhiteSpace Error');
@@ -20,10 +23,14 @@ export class CategoryComponent implements OnInit {
     return null;
   }
 
-  constructor(private categoryService: CategoryService, private builder: FormBuilder) { }
+  constructor(private categoryService: CategoryService, private builder: FormBuilder, private router: Router) { }
 
-  
+
   categoryForm = this.builder.group({
+    name: new FormControl('', [Validators.required, Validators.minLength(2), CategoryComponent.notOnlyWhiteSpace])
+  });
+
+  categoryEditForm = this.builder.group({
     name: new FormControl('', [Validators.required, Validators.minLength(2), CategoryComponent.notOnlyWhiteSpace])
   });
 
@@ -39,6 +46,22 @@ export class CategoryComponent implements OnInit {
   addCategory(name: string): void {
     if (!name) { return; }
     this.categoryService.addCategory({ name } as Category).subscribe(category => this.categories.push(category));
+  }
+
+  updateCategory(name: string): void {
+    if (this.category) {
+      this.categoryService.updateCategory(this.category).subscribe(() => this.goToLists());
+      this.ngOnInit();
+    }
+  }
+
+  deleteCategory(category: Category): void {
+    this.categoryService.deleteCategory(category.id).subscribe();
+    this.ngOnInit();
+  }
+
+  goToLists(): void {
+    this.router.navigate(['/lists']);
   }
 
 

@@ -26,7 +26,7 @@ export class ListService {
   }
 
   getList(id: number): Observable<List> {
-    const listUrl = `/api/lists/${id}`
+    const listUrl = `/api/lists/${id}`;
     // listUrlはこのメソッド内部で定義しているから、this.listUrlという引数は渡さなくても良い
     return this.http.get<List>(listUrl)
       .pipe(
@@ -38,21 +38,30 @@ export class ListService {
   addList(list: List): Observable<List> {
     // postメソッドの第一引数はURL,第二引数が加えるデータ、第三引数（オプション）にはヘッダ情報を渡す
     return this.http.post<List>(this.listsUrl, list, this.httpOptions)
-    .pipe(
-      tap((list:List) => console.log("added new list")),
-      catchError(this.handleError<List>("added List"))
-    );
+      .pipe(
+        tap((list: List) => console.log("added new list")),
+        catchError(this.handleError<List>("added List"))
+      );
   }
 
   // ここがany型のobservableになっているのは、おそらく全体ではなく、一部の情報のみ返すのでList型になるとは限らないから
   updateList(list: List): Observable<any> {
     return this.http.put(this.listsUrl, list, this.httpOptions)
-    .pipe(
-      tap(_ => console.log(`updated list id = ${list.id}`)),
-      catchError(this.handleError<any>("updated List"))
-    );
+      .pipe(
+        tap(_ => console.log(`updated list id = ${list.id}`)),
+        catchError(this.handleError<any>("updated List"))
+      );
   }
 
+  deleteList(id: number): Observable<List> {
+    const listUrl = `/api/lists/${id}`;
+    // ここの<List>がないと、Type 'Observable<Object>' is not assignable to type 'Observable<List>'.というエラーが出る
+    return this.http.delete<List>(listUrl, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`deleted list id = ${id}`)),
+        catchError(this.handleError<List>("deleted List"))
+      );
+  }
 
 
 

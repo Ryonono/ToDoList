@@ -11,33 +11,42 @@
   </thead>
   <tbody>
     <tr *ngFor="let category of categories">
-      <td>{{ category.id }}</td>
-      <td>{{ category.name }}</td>
-      <td>Edit</td>
-      <td>Delete</td>
+      <div *ngIf="category">
+      <form [formGroup]="categoryEditForm">
+        <td>{{ category.id }}</td>
+        <!-- [(ngModel)]のみを単体で用いるときはapp.moduleにFormsModuleのimportが必要らしいが、formControlNameと共に用いるとエラーがなくなる→　console画面でエラーが出力されるので、推奨はされないのだろう -->
+        <td><input id="name" type="text" #categoryEditName formControlName="name" [(ngModel)]="category.name"></td>
+        <td><a routerLink="/categories" (click)="updateCategory(categoryEditName.value)">Update Category</a></td>
+        <td><a routerLink="/categories" (click)="deleteCategory(category)">Delete</a></td>
+      </form>
+      </div>
     </tr>
   </tbody>
 </table>
 
+
+
+
 <form [formGroup]="categoryForm">
 
+  <h3>New Category Form</h3>
   <div>
     <label for="name">Name: </label>
     <input id="name" type="text" formControlName="name" #categoryName>
   </div>
 
-  <div class="mt-2"
-      *ngIf="name.invalid && (name.dirty || name.touched)"
-      class="alert alert-danger">
-      <div *ngIf="name.errors?.['required'] || name.errors?.['notOnlyWhiteSpace']">
-        Name is required and only space is not allowed.
-      </div>
-      <div *ngIf="name.errors?.['minlength']">
-        Name must be at least 2 characters long.
-      </div>
+  <div class="mt-2" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+    <div *ngIf="name.errors?.['required'] || name.errors?.['notOnlyWhiteSpace']">
+      Name is required and only space is not allowed.
     </div>
+    <div *ngIf="name.errors?.['minlength']">
+      Name must be at least 2 characters long.
+    </div>
+  </div>
 
-  <button type="button" [disabled]="categoryForm.invalid" (click)="addCategory(categoryName.value); categoryName.value = ''">Add Category</button>
+  <button type="button" [disabled]="categoryForm.invalid"
+    (click)="addCategory(categoryName.value); categoryName.value = ''">Add Category</button>
+
 </form>
 
 

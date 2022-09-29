@@ -20,7 +20,7 @@
       <td>{{ list.expiration_day | date: 'short' }}</td>
       <td>{{ list.priority }}</td>
       <td><a routerLink="/lists/{{ list.id }}/edit">Edit List</a></td>
-      <td>Delete</td>
+      <td><a routerLink="/lists" (click)="deleteList(list)">Delete</a></td>
     </tr>
   </tbody>
 </table>

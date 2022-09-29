@@ -91,6 +91,14 @@ export class ListsComponent implements OnInit {
     this.listService.addList({ name, category_id, explanation, expiration_day, priority } as List).subscribe(list => this.lists.push(list));
   }
 
+
+  // update,deleteの記述方法がいまいち理解できていないので、詳しく調べる
+  deleteList(list: List): void {
+    this.listService.deleteList(list.id).subscribe();
+    // これがあることで、deleteメソッドが実行された後に、自動的にページが更新される
+    this.ngOnInit();
+  }
+
   // 　Angularの本のp.167に記述してある通り、基本的にlistForm = this.builder.groupのなかでnew FormControlと記述した場合には、htmlでinputタグの中に[formControl]="listForm.controls.category_id"と記述し、
   // それ以降も*ngIf="listForm.controls.category_id.invalidという冗長的な記述が必要であった
   // →下記のようなgetメソッドを使用することで、formControlName="name"とし、それ以降はname.invalidのように楽な記述が可能となる
