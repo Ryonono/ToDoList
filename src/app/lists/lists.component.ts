@@ -16,7 +16,6 @@ export class ListsComponent implements OnInit {
 
   categories: Category[] = [];
 
-  value?: number = 2;
 
   // public priorities = ["high", "middle", "low"];
 
@@ -24,9 +23,9 @@ export class ListsComponent implements OnInit {
     if ((control.value != null) && (control.value.trim().length === 0)) {
       console.log('notOnlyWhiteSpace Error');
       return { 'notOnlyWhiteSpace': true };
-    // } else if (control.value.trim().length <= Validators.minLength(2)) {
-    //   console.log('minLength Error');
-    //   return {'minLength': true};
+      // } else if (control.value.trim().length <= Validators.minLength(2)) {
+      //   console.log('minLength Error');
+      //   return {'minLength': true};
     }
     return null;
   }
@@ -73,11 +72,11 @@ export class ListsComponent implements OnInit {
     // →他の条件分岐に全く生かされない作りであり、実際には絶対避けなければいけない（そのために、ngValueの仕組みを学ばないといけない）
     if (category_id == "1: 1") {
       category_id = 1;
-    }else if (category_id == "2: 2") {
+    } else if (category_id == "2: 2") {
       category_id = 2;
-    }else if (category_id == "3: 3") {
+    } else if (category_id == "3: 3") {
       category_id = 3;
-    }else {
+    } else {
       return;
     }
 
@@ -91,6 +90,12 @@ export class ListsComponent implements OnInit {
     // listServiceではaddListの引数はList型のlist一つのみだが、今回追加したいのはその中身のそれぞれのカラムなので、以下のように複数のカラムをas ListでList型として見做している
     this.listService.addList({ name, category_id, explanation, expiration_day, priority } as List).subscribe(list => this.lists.push(list));
   }
+
+  // 　Angularの本のp.167に記述してある通り、基本的にlistForm = this.builder.groupのなかでnew FormControlと記述した場合には、htmlでinputタグの中に[formControl]="listForm.controls.category_id"と記述し、
+  // それ以降も*ngIf="listForm.controls.category_id.invalidという冗長的な記述が必要であった
+  // →下記のようなgetメソッドを使用することで、formControlName="name"とし、それ以降はname.invalidのように楽な記述が可能となる
+  get name() { return this.listForm.get('name')!; }
+  get category_id() { return this.listForm.get('category_id')!; }
 
 
 }

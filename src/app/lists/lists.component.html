@@ -29,15 +29,15 @@
 
   <div>
     <label for="name">Name: </label>
-    <input id="name" type="text" [formControl]="listForm.controls.name" #listName>
+    <input id="name" type="text" formControlName="name" #listName>
 
     <div class="mt-2"
-      *ngIf="listForm.controls.name.invalid && (listForm.controls.name.dirty || listForm.controls.name.touched)"
+      *ngIf="name.invalid && (name.dirty || name.touched)"
       class="alert alert-danger">
-      <div *ngIf="listForm.controls.name.errors?.['required'] || listForm.controls.name.errors?.['notOnlyWhiteSpace']">
+      <div *ngIf="name.errors?.['required'] || name.errors?.['notOnlyWhiteSpace']">
         Name is required and only space is not allowed.
       </div>
-      <div *ngIf="listForm.controls.name.errors?.['minlength']">
+      <div *ngIf="name.errors?.['minlength']">
         Name must be at least 2 characters long.
       </div>
     </div>
@@ -45,19 +45,20 @@
 
   <div>
     <label for="category_id">Category Id: </label>
-    <select id="category_id" type="number" [formControl]="listForm.controls.category_id" #listCategory>
+    <select id="category_id" type="number" formControlName="category_id" #listCategory>
       <!-- 一つ目の値にしても、エラーが出ずに保存されてしまう -->
       <!-- →value = ''　を一つ目だけに追加し、listForm.controls.category_id.value == ''だった時にエラーを表示させるようにした →OK!! -->
       <option value=''>Please choose one of all the categories.</option>
       <!-- オブジェクトを指定している場合、ngValueを使わないと値が正常に切り替わらない -->
       <!-- ここでstring型を受け取っており、Argument of type 'string' is not assignable to parameter of type 'number'.というエラーが出てしまう -->
+      <!-- →component側でanyがたで受け取り、その中で条件分岐をしているが、現地点では新たにカテゴリーを追加した際、保存ができない状態にある -->
       <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
     </select>
 
     <div class="mt-2"
-      *ngIf="listForm.controls.category_id.invalid && (listForm.controls.category_id.dirty || listForm.controls.category_id.touched)"
+      *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)"
       class="alert alert-danger">
-      <div *ngIf="listForm.controls.category_id.errors?.['required'] || listForm.controls.category_id.value == ''">
+      <div *ngIf="category_id.errors?.['required'] || category_id.value == ''">
         Category Id is required.
       </div>
     </div>
@@ -82,15 +83,15 @@
 
   <div>
     <label for="expiration_day">Expiration Day: </label>
-    <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00" formControlName="expiration_day"
+    <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00" [formControl]="listForm.controls.expiration_day"
       #listExpiration>
 
-    <!-- <div class="mt-2" *ngIf="expiration_day.invalid && (expiration_day.dirty || expiration_day.touched)"
+    <div class="mt-2" *ngIf="listForm.controls.expiration_day.invalid && (listForm.controls.expiration_day.dirty || listForm.controls.expiration_day.touched)"
       class="alert alert-danger">
-      <div *ngIf="expiration_day.errors?.['required']">
-        expiration day is required and only space is not allowed.
+      <div *ngIf="listForm.controls.expiration_day.errors?.['required']">
+        Expiration Day is required.
       </div>
-    </div> -->
+    </div>
   </div>
 
   <div>

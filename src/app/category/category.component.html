@@ -19,4 +19,26 @@
   </tbody>
 </table>
 
+<form [formGroup]="categoryForm">
+
+  <div>
+    <label for="name">Name: </label>
+    <input id="name" type="text" formControlName="name" #categoryName>
+  </div>
+
+  <div class="mt-2"
+      *ngIf="name.invalid && (name.dirty || name.touched)"
+      class="alert alert-danger">
+      <div *ngIf="name.errors?.['required'] || name.errors?.['notOnlyWhiteSpace']">
+        Name is required and only space is not allowed.
+      </div>
+      <div *ngIf="name.errors?.['minlength']">
+        Name must be at least 2 characters long.
+      </div>
+    </div>
+
+  <button type="button" [disabled]="categoryForm.invalid" (click)="addCategory(categoryName.value); categoryName.value = ''">Add Category</button>
+</form>
+
+
 <div><a routerLink="/lists">Go Back To List Index Page</a></div>

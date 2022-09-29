@@ -32,7 +32,7 @@ export class ListService {
       .pipe(
         tap(list => console.log(`fetched Book id = ${id}`)),
         catchError(this.handleError<List>(`getList id = ${id}`))
-      )
+      );
   }
 
   addList(list: List): Observable<List> {
@@ -41,7 +41,16 @@ export class ListService {
     .pipe(
       tap((list:List) => console.log("added new list")),
       catchError(this.handleError<List>("added List"))
-    )
+    );
+  }
+
+  // ここがany型のobservableになっているのは、おそらく全体ではなく、一部の情報のみ返すのでList型になるとは限らないから
+  updateList(list: List): Observable<any> {
+    return this.http.put(this.listsUrl, list, this.httpOptions)
+    .pipe(
+      tap(_ => console.log(`updated list id = ${list.id}`)),
+      catchError(this.handleError<any>("updated List"))
+    );
   }
 
 
