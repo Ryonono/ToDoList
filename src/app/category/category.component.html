@@ -5,27 +5,29 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th></th>
+      <!-- <th></th> -->
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of categories">
-      <div *ngIf="category">
-      <form [formGroup]="categoryEditForm">
-        <td>{{ category.id }}</td>
-        <!-- [(ngModel)]のみを単体で用いるときはapp.moduleにFormsModuleのimportが必要らしいが、formControlNameと共に用いるとエラーがなくなる→　console画面でエラーが出力されるので、推奨はされないのだろう -->
-        <td><input id="name" type="text" #categoryEditName formControlName="name" [(ngModel)]="category.name"></td>
-        <td><a routerLink="/categories" (click)="updateCategory(categoryEditName.value)">Update Category</a></td>
-        <td><a routerLink="/categories" (click)="deleteCategory(category)">Delete</a></td>
-      </form>
-      </div>
+      <td>{{ category.id }}</td>
+      <!-- [(ngModel)]のみを単体で用いるときはapp.moduleにFormsModuleのimportが必要らしいが、formControlNameと共に用いるとエラーがなくなる→　console画面でエラーが出力されるので、推奨はされないのだろう -->
+      <td>{{ category.name }}</td>
+      <!-- <td><a routerLink="/categories" (click)="updateCategory(category.name)">Update Category</a></td> -->
+      <td><a routerLink="/categories" (click)="deleteCategory(category)">Delete</a></td>
     </tr>
   </tbody>
 </table>
 
 
-
+<!-- 一旦ここにupdate用のものは避難させておく -->
+<!-- <div *ngIf="category">
+  <form [formGroup]="categoryEditForm">
+    <input id="name" type="text" #categoryEditName formControlName="name" [(ngModel)]="category.name">
+    <a routerLink="/categories" (click)="updateCategory(category.name)">Update Category</a>
+  </form>
+</div> -->
 
 <form [formGroup]="categoryForm">
 

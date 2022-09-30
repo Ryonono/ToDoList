@@ -43,17 +43,18 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories);
   }
 
+  // 一度全てデータをdeleteしてしまったら、idがうまく読み取られないせいで新しく投稿ができなくなってしまう
   addCategory(name: string): void {
     if (!name) { return; }
     this.categoryService.addCategory({ name } as Category).subscribe(category => this.categories.push(category));
   }
 
-  updateCategory(name: string): void {
-    if (this.category) {
-      this.categoryService.updateCategory(this.category).subscribe(() => this.goToLists());
-      this.ngOnInit();
-    }
-  }
+  // updateCategory(name: string): void {
+  //   if (this.category) {
+  //     this.categoryService.updateCategory(this.category).subscribe(() => this.goToLists());
+  //   }
+  //   this.ngOnInit();
+  // }
 
   deleteCategory(category: Category): void {
     this.categoryService.deleteCategory(category.id).subscribe();

@@ -51,14 +51,12 @@ export class ListEditComponent implements OnInit {
 
   updateList(name: string, category_id: any, explanation: string, expiration_day: any, priority: string): void {
 
-    if (category_id == "1: 1") {
-      category_id = 1;
-    } else if (category_id == "2: 2") {
-      category_id = 2;
-    } else if (category_id == "3: 3") {
-      category_id = 3;
-    } else {
-      return;
+    let i = this.listForm.controls['category_id'].value;
+    if (category_id == `${i}`) {
+      category_id = i;
+      // なぜかこの条件分岐で3: 5などの値だった場合でも後者のvalueを受け取ってくれる
+    }else {
+      category_id = i;
     }
     if (!name || !category_id || !explanation || !expiration_day || !priority) { return; }
     // このsubscribeの挙動がわからない

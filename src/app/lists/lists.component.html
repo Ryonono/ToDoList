@@ -45,7 +45,7 @@
 
   <div>
     <label for="category_id">Category Id: </label>
-    <select id="category_id" type="number" formControlName="category_id" #listCategory>
+    <select id="category_id" formControlName="category_id" #listCategory>
       <!-- 一つ目の値にしても、エラーが出ずに保存されてしまう -->
       <!-- →value = ''　を一つ目だけに追加し、listForm.controls.category_id.value == ''だった時にエラーを表示させるようにした →OK!! -->
       <option value=''>Please choose one of all the categories.</option>

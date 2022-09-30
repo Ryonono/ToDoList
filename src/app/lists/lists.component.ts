@@ -4,6 +4,7 @@ import { List } from '../list'
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-lists',
@@ -58,9 +59,12 @@ export class ListsComponent implements OnInit {
 
   // public value: number = this.listForm.category_id;
 
+
   // category_idとexpiration_dayがstring型だと解釈されて、引数の値だと言われているnumber, Date型と一致しないというエラーが出ていた
   // →現状any型で引数を受け取ることでエラーはなくなったが、まずanyは使用を避けた方が良い型である＋ 1: 1のように、カテゴリーなどがうまく機能していない
   //expiration_dayはなぜか12時台のみPM12という表記になっているが、特にエラーなく保存・表示できている
+
+  // 一度全てデータをdeleteしてしまったら、idがうまく読み取られないせいで新しく投稿ができなくなってしまう
   addList(name: string, category_id: any, explanation: string, expiration_day: any, priority: string): void {
     name = name.trim();
     category_id = category_id.trim();
@@ -69,15 +73,26 @@ export class ListsComponent implements OnInit {
     priority = priority.trim();
     // expiration_day = expiration_day.toISOString();
     // なぜかstring型の　key, valueの状態でcategory_idが出力されるので、そのまま条件分岐した
-    // →他の条件分岐に全く生かされない作りであり、実際には絶対避けなければいけない（そのために、ngValueの仕組みを学ばないといけない）
-    if (category_id == "1: 1") {
-      category_id = 1;
-    } else if (category_id == "2: 2") {
-      category_id = 2;
-    } else if (category_id == "3: 3") {
-      category_id = 3;
-    } else {
-      return;
+    // if (category_id == "1: 1") {
+    //   category_id = 1;
+    // } else if (category_id == "2: 2") {
+    //   category_id = 2;
+    // } else if (category_id == "3: 3") {
+    //   category_id = 3;
+    // } else {
+    //   return;
+    // }
+
+    // category_idの特定の要素のみ入手するため、まず上記のように条件分岐を行っていたが、それだとcategoryが追加されたときに
+    // 追加された文を使用できなかった。次にtrim（）やsubstr()を使用して得たデータを整形しようとしたが、データが必ず1: 1という連想配列の形で渡されてきており、変更不可能だった。
+    // その後１日悩んで放ってしまっていたが、そもそもformの値を持ってきて、その形のうちのiの部分だけを代入しちゃえば新たな変数として作成できるのではないかということで、調べて実装した
+    // let reg = new RegExp(this.listForm.controls['category_id'].value);
+    let i = this.listForm.controls['category_id'].value;
+    if (category_id == `${i}`) {
+      category_id = i;
+      // なぜかこの条件分岐で3: 5などの値だった場合でも後者のvalueを受け取ってくれる
+    }else {
+      category_id = i;
     }
 
     console.log(name);

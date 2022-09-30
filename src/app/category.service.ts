@@ -32,15 +32,15 @@ export class CategoryService {
       );
   }
 
-  // Observableのジェネリクス？をCategoryにすると、The 'Object' type is assignable to very few other types. Did you mean to use the 'any' type instead?
+  // Observableの型引数リストをCategoryにすると、The 'Object' type is assignable to very few other types. Did you mean to use the 'any' type instead?
   //   Type 'Object' is missing the following properties from type 'Category': id, name　というエラーが出る→any型にする
-  updateCategory(category: Category): Observable<any> {
-    return this.http.put(this.categoriesUrl, category, this.httpOptions)
-      .pipe(
-        tap(_ => console.log(`updated Category id = ${category.id}`)),
-        catchError(this.handleError<Category>("updated Category"))
-      );
-  }
+  // updateCategory(category: Category): Observable<any> {
+  //   return this.http.put(this.categoriesUrl, category, this.httpOptions)
+  //     .pipe(
+  //       tap(_ => console.log(`updated Category id = ${category.id}`)),
+  //       catchError(this.handleError<Category>("updated Category"))
+  //     );
+  // }
 
   deleteCategory(id: number): Observable<Category> {
     const categoryUrl = `${this.categoriesUrl}/${id}`;
