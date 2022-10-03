@@ -1,6 +1,6 @@
 <h2>This is category index page. You can see index of categories and edit it.</h2>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
@@ -31,8 +31,9 @@
 
 <form [formGroup]="categoryForm">
 
-  <h3>New Category Form</h3>
-  <div>
+  <h3 class="mb-3">New Category Form</h3>
+
+  <div class="mb-2">
     <label for="name">Name: </label>
     <input id="name" type="text" formControlName="name" #categoryName>
   </div>
@@ -46,7 +47,7 @@
     </div>
   </div>
 
-  <button type="button" [disabled]="categoryForm.invalid"
+  <button class="btn btn-outline-success mb-3" type="button" [disabled]="categoryForm.invalid"
     (click)="addCategory(categoryName.value); categoryName.value = ''">Add Category</button>
 
 </form>

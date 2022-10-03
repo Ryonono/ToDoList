@@ -1,23 +1,24 @@
-<h2>This is List Edit page.</h2>
+<h2 class="mb-3">This is List Edit page.</h2>
 
 <!-- この条件文がないと、どのlistかを見つけることができず、{{ list.name }}がエラーになる　Object is possibly 'undefined'. -->
 <div *ngIf="list">
 
-  <div>
+  <div class="mb-2">
     <span>Id: </span>
     <span>{{ list.id }}</span>
   </div>
 
   <form [formGroup]="listForm">
 
-    <div>
+    <div class="mb-2">
       <label for="name">Name: </label>
       <input id="name" type="text" [formControl]="listForm.controls.name" #listName [(ngModel)]="list.name">
-  
+
       <div class="mt-2"
         *ngIf="listForm.controls.name.invalid && (listForm.controls.name.dirty || listForm.controls.name.touched)"
         class="alert alert-danger">
-        <div *ngIf="listForm.controls.name.errors?.['required'] || listForm.controls.name.errors?.['notOnlyWhiteSpace']">
+        <div
+          *ngIf="listForm.controls.name.errors?.['required'] || listForm.controls.name.errors?.['notOnlyWhiteSpace']">
           Name is required and only space is not allowed.
         </div>
         <div *ngIf="listForm.controls.name.errors?.['minlength']">
@@ -25,14 +26,15 @@
         </div>
       </div>
     </div>
-  
-    <div>
+
+    <div class="mb-2">
       <label for="category_id">Category Id: </label>
-      <select id="category_id" type="number" [formControl]="listForm.controls.category_id" #listCategory [(ngModel)]="list.category_id">
+      <select id="category_id" type="number" [formControl]="listForm.controls.category_id" #listCategory
+        [(ngModel)]="list.category_id">
         <option value=''>Please choose one of all the categories.</option>
         <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
       </select>
-  
+
       <div class="mt-2"
         *ngIf="listForm.controls.category_id.invalid && (listForm.controls.category_id.dirty || listForm.controls.category_id.touched)"
         class="alert alert-danger">
@@ -41,11 +43,12 @@
         </div>
       </div>
     </div>
-  
-    <div>
+
+    <div class="mb-2">
       <label for="explanation">Explanation: </label>
-      <input id="explanation" type="text" [formControl]="listForm.controls.explanation" #listExplanation [(ngModel)]="list.explanation">
-  
+      <input id="explanation" type="text" [formControl]="listForm.controls.explanation" #listExplanation
+        [(ngModel)]="list.explanation">
+
       <div class="mt-2"
         *ngIf="listForm.controls.explanation.invalid && (listForm.controls.explanation.dirty || listForm.controls.explanation.touched)"
         class="alert alert-danger">
@@ -58,29 +61,30 @@
         </div>
       </div>
     </div>
-  
-    <div>
+
+    <div class="mb-2">
       <label for="expiration_day">Expiration Day: </label>
-      <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00" [formControl]="listForm.controls.expiration_day"
-        #listExpiration [(ngModel)]="list.expiration_day">
-  
-      <div class="mt-2" *ngIf="listForm.controls.expiration_day.invalid && (listForm.controls.expiration_day.dirty || listForm.controls.expiration_day.touched)"
+      <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00"
+        [formControl]="listForm.controls.expiration_day" #listExpiration [(ngModel)]="list.expiration_day">
+
+      <div class="mt-2"
+        *ngIf="listForm.controls.expiration_day.invalid && (listForm.controls.expiration_day.dirty || listForm.controls.expiration_day.touched)"
         class="alert alert-danger">
         <div *ngIf="listForm.controls.expiration_day.errors?.['required']">
           Expiration Day is required.
         </div>
       </div>
     </div>
-  
-    <div>
+
+    <div class="mb-2">
       <label for="priority">Priority: </label>
-      <select id="priority" [formControl]="listForm.controls.priority" #listPriority [(ngModel)]="list.priority">  
+      <select id="priority" [formControl]="listForm.controls.priority" #listPriority [(ngModel)]="list.priority">
         <option value=''>Please choose priority level.</option>
         <option>high</option>
         <option>middle</option>
         <option>low</option>
       </select>
-  
+
       <div class="mt-2"
         *ngIf="listForm.controls.priority.invalid && (listForm.controls.priority.dirty || listForm.controls.priority.touched)"
         class="alert alert-danger">
@@ -89,13 +93,12 @@
         </div>
       </div>
     </div>
-  
-  
-    <button type="button" [disabled]="listForm.invalid" (click)="updateList(listName.value, listCategory.value, listExplanation.value,
-     listExpiration.value, listPriority.value);">Create
-      new List</button>
-  
-  
+
+
+    <button class="mb-2 btn btn-outline-warning" type="button" [disabled]="listForm.invalid" (click)="updateList(listName.value, listCategory.value, listExplanation.value,
+     listExpiration.value, listPriority.value);">Update List</button>
+
+
   </form>
 
 </div>

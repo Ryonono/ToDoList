@@ -57,6 +57,21 @@ export class ListsComponent implements OnInit {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories);
   }
 
+  
+
+  // getColor(): void {
+  //   const pri: any = document.getElementById('priority-list')
+
+  //   if (pri.value == "high") {
+  //     pri.style.color = 'red';
+  //   }else if (pri.value == "middle") {
+  //     pri.style.color = 'yellow';
+  //   } else if (pri.value == "low") {
+  //     pri.style.color = 'blue';
+  //   }
+    
+  // }
+
   // public value: number = this.listForm.category_id;
 
 

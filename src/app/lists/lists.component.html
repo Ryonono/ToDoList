@@ -1,6 +1,6 @@
-<h2>This is index page of to do list.</h2>
+<h3>This is index page of to do list.</h3>
 
-<table>
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -15,10 +15,11 @@
   <tbody>
     <tr *ngFor="let list of lists">
       <td>{{ list.name }}</td>
-      <td>{{ list.category_id }}</td>
+      <td class="fst-italic">{{ list.category_id }}</td>
       <td>{{ list.explanation }}</td>
       <td>{{ list.expiration_day | date: 'short' }}</td>
-      <td>{{ list.priority }}</td>
+      <!-- priorityによって色を変更させようとしているが、いまだにできず -->
+      <td id="priority-list">{{ list.priority }}</td>
       <td><a routerLink="/lists/{{ list.id }}/edit">Edit List</a></td>
       <td><a routerLink="/lists" (click)="deleteList(list)">Delete</a></td>
     </tr>
@@ -27,13 +28,13 @@
 
 <form [formGroup]="listForm">
 
-  <div>
+  <h3 class="mb-3">New List Form</h3>
+
+  <div class="mb-2">
     <label for="name">Name: </label>
     <input id="name" type="text" formControlName="name" #listName>
 
-    <div class="mt-2"
-      *ngIf="name.invalid && (name.dirty || name.touched)"
-      class="alert alert-danger">
+    <div class="mt-2" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
       <div *ngIf="name.errors?.['required'] || name.errors?.['notOnlyWhiteSpace']">
         Name is required and only space is not allowed.
       </div>
@@ -43,7 +44,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="mb-2">
     <label for="category_id">Category Id: </label>
     <select id="category_id" formControlName="category_id" #listCategory>
       <!-- 一つ目の値にしても、エラーが出ずに保存されてしまう -->
@@ -55,8 +56,7 @@
       <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
     </select>
 
-    <div class="mt-2"
-      *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)"
+    <div class="mt-2" *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)"
       class="alert alert-danger">
       <div *ngIf="category_id.errors?.['required'] || category_id.value == ''">
         Category Id is required.
@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="mb-2">
     <label for="explanation">Explanation: </label>
     <input id="explanation" type="text" [formControl]="listForm.controls.explanation" #listExplanation>
 
@@ -81,12 +81,13 @@
     </div>
   </div>
 
-  <div>
+  <div class="mb-2">
     <label for="expiration_day">Expiration Day: </label>
-    <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00" [formControl]="listForm.controls.expiration_day"
-      #listExpiration>
+    <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00"
+      [formControl]="listForm.controls.expiration_day" #listExpiration>
 
-    <div class="mt-2" *ngIf="listForm.controls.expiration_day.invalid && (listForm.controls.expiration_day.dirty || listForm.controls.expiration_day.touched)"
+    <div class="mt-2"
+      *ngIf="listForm.controls.expiration_day.invalid && (listForm.controls.expiration_day.dirty || listForm.controls.expiration_day.touched)"
       class="alert alert-danger">
       <div *ngIf="listForm.controls.expiration_day.errors?.['required']">
         Expiration Day is required.
@@ -94,7 +95,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="mb-2">
     <label for="priority">Priority: </label>
     <select id="priority" [formControl]="listForm.controls.priority" #listPriority>
       <option value=''>Please choose priority level.</option>
@@ -115,7 +116,7 @@
   </div>
 
 
-  <button type="button" [disabled]="listForm.invalid" (click)="addList(listName.value, listCategory.value, listExplanation.value,
+  <button class="mb-3 btn btn-outline-success" type="button" [disabled]="listForm.invalid" (click)="addList(listName.value, listCategory.value, listExplanation.value,
    listExpiration.value, listPriority.value); listName.value = ''; listCategory.value = ''; listExplanation.value = '';
    listExpiration.value = ''; listPriority.value = '';">Create
     new List</button>
