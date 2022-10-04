@@ -30,7 +30,7 @@ import { setColorDirective } from './setColor.directive';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    // FormsModule,
+    FormsModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     )

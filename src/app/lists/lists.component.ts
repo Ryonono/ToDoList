@@ -17,7 +17,9 @@ export class ListsComponent implements OnInit {
 
   categories: Category[] = [];
 
-
+  // 実験的にngModelを使用してみたが、これを使うことで、フォーム街の場所にもリアルタイムで情報を更新して表示させることができる
+  // ngModelを使用せずとも、テンプレート参照変数を用いることで表現可能（どちらにせよFormsModuleのimportは必要
+  // listPri = 'high';
   // public priorities = ["high", "middle", "low"];
 
   static notOnlyWhiteSpace(control: FormControl): ValidationErrors | null {
