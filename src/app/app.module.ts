@@ -15,7 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { setColorDirective } from './setColor.directive';
+import { setColorPipe } from './setColor.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { setColorDirective } from './setColor.directive';
     ListsComponent,
     CategoryComponent,
     ListEditComponent,
-    setColorDirective
+    setColorPipe
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@
       <td>{{ list.explanation }}</td>
       <td>{{ list.expiration_day | date: 'short' }}</td>
       <!-- priorityによって色を変更させようとしているが、いまだにできず -->
-      <td id="priority-list">{{ list.priority }}</td>
+      <td class="priority-list">{{ list.priority | setColor }}</td>
       <td><a routerLink="/lists/{{ list.id }}/edit">Edit List</a></td>
       <td><a routerLink="/lists" (click)="deleteList(list)">Delete</a></td>
     </tr>
@@ -31,7 +31,7 @@
   <h3 class="mb-3">New List Form</h3>
 
   <div class="mb-2">
-    <label for="name">Name: </label>
+    <label for="name">Name:&ensp;</label>
     <input id="name" type="text" formControlName="name" #listName>
 
     <div class="mt-2" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
@@ -45,7 +45,7 @@
   </div>
 
   <div class="mb-2">
-    <label for="category_id">Category Id: </label>
+    <label for="category_id">Category Id:&ensp;</label>
     <select id="category_id" formControlName="category_id" #listCategory>
       <!-- 一つ目の値にしても、エラーが出ずに保存されてしまう -->
       <!-- →value = ''　を一つ目だけに追加し、listForm.controls.category_id.value == ''だった時にエラーを表示させるようにした →OK!! -->
@@ -65,7 +65,7 @@
   </div>
 
   <div class="mb-2">
-    <label for="explanation">Explanation: </label>
+    <label for="explanation">Explanation:&ensp;</label>
     <input id="explanation" type="text" [formControl]="listForm.controls.explanation" #listExplanation>
 
     <div class="mt-2"
@@ -82,7 +82,7 @@
   </div>
 
   <div class="mb-2">
-    <label for="expiration_day">Expiration Day: </label>
+    <label for="expiration_day">Expiration Day:&ensp;</label>
     <input id="expiration_day" type="datetime-local" min="2022-01-01T00:00"
       [formControl]="listForm.controls.expiration_day" #listExpiration>
 
@@ -96,7 +96,7 @@
   </div>
 
   <div class="mb-2">
-    <label for="priority">Priority: </label>
+    <label for="priority">Priority:&ensp;</label>
     <select id="priority" [formControl]="listForm.controls.priority" #listPriority>
       <option value=''>Please choose priority level.</option>
       <!-- componentのなかに配列を作成して読み込む以下の方式では、1: highのようにkeyとvalueがセットで保存されてしまっていた -->
@@ -126,6 +126,8 @@
 
 <!-- フォーム外にも情報を持ってくることが可能であることを試した -->
 <!-- <div [(ngModel)]="listPri">{{ listPri }}</div> -->
-<!-- <div>{{ listPriority.value }}</div> -->
+<div>{{ listPriority.value }}</div>
+<!-- 他のデータベースからデータを取得している時、オブジェクト型がそのまま表示されるので、その中でうまくnameプロパティだけを取ってくるやり方がわからない -->
+<div>{{ listCategory.value }}</div>
 
 <p><a routerLink="/categories">Go to Categories page</a></p>
